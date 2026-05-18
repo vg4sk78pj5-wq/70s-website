@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groovy 70s – The Decade That Shook the World</title>
+<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Righteous&family=Special+Elite&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8621A;
+    --yellow: #F5C518;
+    --brown: #7B4F2E;
+    --cream: #F7E9C8;
+    --teal: #2A8C8C;
+    --avocado: #6B7C2E;
+    --dark: #1A0F05;
+    --rust: #B84B1A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Oswald', sans-serif;
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ===== TITLE SCREEN ===== */
+  #title-screen {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at center, #3D1A00 0%, #1A0F05 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .disco-ball {
+    width: 120px; height: 120px;
+    background: radial-gradient(circle at 35% 35%, #fff 0%, #aaa 30%, #555 70%, #222 100%);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    box-shadow: 0 0 60px rgba(255,255,255,0.3), 0 0 100px rgba(248,197,24,0.4);
+    animation: spin 4s linear infinite, glow 2s ease-in-out infinite alternate;
+    position: relative;
+  }
+  .disco-ball::before {
+    content:'';
+    position:absolute;inset:0;border-radius:50%;
+    background: repeating-conic-gradient(rgba(255,255,255,0.15) 0deg 10deg, transparent 10deg 20deg);
+    animation: spin 2s linear infinite reverse;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes glow {
+    from { box-shadow: 0 0 40px rgba(255,255,255,0.2), 0 0 80px rgba(232,98,26,0.3); }
+    to   { box-shadow: 0 0 80px rgba(255,255,255,0.5), 0 0 150px rgba(245,197,24,0.5); }
+  }
+
+  .title-main {
+    font-family: 'Monoton', cursive;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    color: var(--yellow);
+    text-shadow: 0 0 30px var(--orange), 4px 4px 0 var(--rust);
+    letter-spacing: 4px;
+    animation: pulse 2s ease-in-out infinite;
+    line-height: 1.1;
+  }
+  @keyframes pulse {
+    0%,100% { text-shadow: 0 0 30px var(--orange), 4px 4px 0 var(--rust); }
+    50% { text-shadow: 0 0 60px var(--yellow), 4px 4px 0 var(--brown); }
+  }
+
+  .title-sub {
+    font-family: 'Righteous', cursive;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    color: var(--orange);
+    margin: 10px 0 4px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+  }
+
+  .title-authors {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    color: var(--cream);
+    opacity: 0.8;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+  }
+
+  .groovy-divider {
+    width: 300px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--yellow), var(--orange), var(--yellow), transparent);
+    margin: 15px auto;
+    border-radius: 2px;
+  }
+
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .nav-btn {
+    background: linear-gradient(135deg, var(--orange), var(--rust));
+    border: 2px solid var(--yellow);
+    color: var(--cream);
+    font-family: 'Righteous', cursive;
+    font-size: 0.95rem;
+    padding: 14px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-btn::before {
+    content:'';
+    position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity:0;transition:opacity 0.3s;
+  }
+  .nav-btn:hover::before { opacity:1; }
+  .nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(232,98,26,0.5);
+    border-color: var(--cream);
+  }
+  .nav-btn .btn-icon { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+
+  /* Floating decorations */
+  .floater {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatAround 8s ease-in-out infinite;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  @keyframes floatAround {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(10deg); }
+    66% { transform: translateY(10px) rotate(-5deg); }
+  }
+
+  /* ===== PAGE LAYOUT ===== */
+  .page {
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, var(--brown), var(--dark));
+    border-bottom: 4px solid var(--yellow);
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .page-header h1 {
+    font-family: 'Monoton', cursive;
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
+    color: var(--yellow);
+    text-shadow: 2px 2px 0 var(--rust);
+  }
+
+  .back-btn {
+    background: var(--teal);
+    border: 2px solid var(--cream);
+    color: var(--cream);
+    font-family: 'Righteous', cursive;
+    font-size: 0.9rem;
+    padding: 8px 18px;
+    cursor: pointer;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: var(--avocado); transform: scale(1.05); }
+
+  .page-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* ===== CARDS ===== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .card {
+    background: linear-gradient(145deg, #2A1A08, #1A0F05);
+    border: 2px solid var(--orange);
+    border-radius: 6px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card::before {
+    content:'';
+    position:absolute;top:0;left:0;right:0;height:4px;
+    background: linear-gradient(90deg, var(--yellow), var(--orange), var(--rust));
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(232,98,26,0.3); }
+
+  .card-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .card h3 {
+    font-family: 'Righteous', cursive;
+    font-size: 1.3rem;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .card p {
+    font-family: 'Special Elite', serif;
+    font-size: 0.95rem;
+    color: var(--cream);
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+
+  .section-intro {
+    font-family: 'Special Elite', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    opacity: 0.85;
+    line-height: 1.7;
+    max-width: 800px;
+    margin-bottom: 30px;
+    border-left: 4px solid var(--yellow);
+    padding-left: 20px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--cream);
+    font-size: 0.7rem;
+    font-family: 'Righteous', cursive;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    margin: 3px 3px 0 0;
+    text-transform: uppercase;
+  }
+  .tag.orange { background: var(--orange); }
+  .tag.avocado { background: var(--avocado); }
+  .tag.rust { background: var(--rust); }
+
+  /* ===== PONG GAME ===== */
+  #pong-canvas {
+    display: block;
+    background: #000;
+    border: 3px solid var(--yellow);
+    border-radius: 4px;
+    max-width: 100%;
+    margin: 20px auto;
+    box-shadow: 0 0 40px rgba(245,197,24,0.3);
+  }
+
+  .game-controls {
+    text-align: center;
+    margin: 15px 0;
+    font-family: 'Special Elite', serif;
+    color: var(--cream);
+    opacity: 0.8;
+    font-size: 0.95rem;
+  }
+
+  .game-btn {
+    background: linear-gradient(135deg, var(--avocado), var(--teal));
+    border: 2px solid var(--yellow);
+    color: var(--cream);
+    font-family: 'Righteous', cursive;
+    font-size: 1rem;
+    padding: 12px 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+    margin: 8px;
+  }
+  .game-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(42,140,140,0.4); }
+
+  /* ===== SNAKE GAME ===== */
+  #snake-canvas {
+    display: block;
+    background: #0A1A05;
+    border: 3px solid var(--avocado);
+    border-radius: 4px;
+    max-width: 100%;
+    margin: 20px auto;
+    box-shadow: 0 0 40px rgba(107,124,46,0.4);
+  }
+
+  /* ===== QUIZ ===== */
+  .quiz-container { max-width: 700px; margin: 0 auto; }
+
+  .quiz-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    height: 8px;
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+  .quiz-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), var(--yellow));
+    border-radius: 20px;
+    transition: width 0.4s ease;
+  }
+
+  .quiz-question {
+    background: linear-gradient(145deg, #2A1A08, #1A0F05);
+    border: 2px solid var(--orange);
+    border-radius: 6px;
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+  .quiz-q-num {
+    font-family: 'Righteous', cursive;
+    color: var(--orange);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .quiz-q-text {
+    font-family: 'Special Elite', serif;
+    font-size: 1.2rem;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  .quiz-options { display: grid; gap: 12px; }
+  .quiz-option {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(245,197,24,0.3);
+    color: var(--cream);
+    font-family: 'Special Elite', serif;
+    font-size: 1rem;
+    padding: 14px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: left;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .quiz-option:hover { border-color: var(--yellow); background: rgba(245,197,24,0.1); }
+  .quiz-option.correct { background: rgba(107,124,46,0.4); border-color: #8BC34A; }
+  .quiz-option.wrong { background: rgba(184,75,26,0.4); border-color: var(--rust); }
+
+  .quiz-feedback {
+    font-family: 'Righteous', cursive;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 15px;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.good { background: rgba(107,124,46,0.3); color: #8BC34A; }
+  .quiz-feedback.bad { background: rgba(184,75,26,0.3); color: #FF7043; }
+
+  .quiz-next-btn {
+    background: linear-gradient(135deg, var(--orange), var(--rust));
+    border: 2px solid var(--yellow);
+    color: var(--cream);
+    font-family: 'Righteous', cursive;
+    font-size: 1rem;
+    padding: 12px 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    display: none;
+    transition: all 0.2s;
+  }
+  .quiz-next-btn.show { display: inline-block; }
+  .quiz-next-btn:hover { transform: scale(1.05); }
+
+  .quiz-score {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(145deg, #2A1A08, #1A0F05);
+    border: 2px solid var(--yellow);
+    border-radius: 6px;
+  }
+  .quiz-score .score-num {
+    font-family: 'Monoton', cursive;
+    font-size: clamp(3rem, 10vw, 5rem);
+    color: var(--yellow);
+    text-shadow: 0 0 30px var(--orange);
+  }
+  .quiz-score .score-label {
+    font-family: 'Righteous', cursive;
+    font-size: 1.3rem;
+    color: var(--orange);
+    margin-top: 10px;
+    letter-spacing: 2px;
+  }
+  .quiz-score .score-msg {
+    font-family: 'Special Elite', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-top: 15px;
+    opacity: 0.85;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 40px; }
+  .timeline::before {
+    content:'';
+    position:absolute;left:14px;top:0;bottom:0;width:3px;
+    background: linear-gradient(180deg, var(--yellow), var(--orange), var(--rust));
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 35px;
+    background: linear-gradient(145deg, #2A1A08, #1A0F05);
+    border: 1px solid var(--orange);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .timeline-item::before {
+    content:'';
+    position:absolute;left:-33px;top:20px;
+    width:16px;height:16px;border-radius:50%;
+    background: var(--yellow);
+    border: 3px solid var(--orange);
+    box-shadow: 0 0 10px var(--yellow);
+  }
+  .timeline-year {
+    font-family: 'Monoton', cursive;
+    font-size: 1rem;
+    color: var(--yellow);
+    margin-bottom: 8px;
+  }
+  .timeline-title {
+    font-family: 'Righteous', cursive;
+    font-size: 1.1rem;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+  .timeline-desc {
+    font-family: 'Special Elite', serif;
+    font-size: 0.95rem;
+    color: var(--cream);
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 600px) {
+    .nav-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-header { padding: 15px; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 4px; }
+
+  .highlight-list {
+    list-style: none;
+    margin-top: 15px;
+  }
+  .highlight-list li {
+    font-family: 'Special Elite', serif;
+    font-size: 0.95rem;
+    color: var(--cream);
+    opacity: 0.85;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(245,197,24,0.15);
+    padding-left: 20px;
+    position: relative;
+  }
+  .highlight-list li::before {
+    content: '♪';
+    position:absolute;left:0;color:var(--yellow);
+  }
+
+  .game-score-display {
+    font-family: 'Monoton', cursive;
+    font-size: 1.4rem;
+    color: var(--yellow);
+    text-align: center;
+    margin: 10px 0;
+    text-shadow: 0 0 15px var(--orange);
+  }
+
+  .page-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--orange);
+    flex-wrap: wrap;
+  }
+  .page-tab {
+    background: transparent;
+    border: none;
+    color: var(--cream);
+    font-family: 'Righteous', cursive;
+    font-size: 0.9rem;
+    padding: 10px 18px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    opacity: 0.6;
+  }
+  .page-tab.active { color: var(--yellow); border-bottom-color: var(--yellow); opacity: 1; }
+  .page-tab:hover { opacity: 0.9; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ===== TITLE SCREEN ===== -->
+<div id="title-screen">
+  <span class="floater" style="top:10%;left:5%;animation-delay:0s">🌻</span>
+  <span class="floater" style="top:20%;right:8%;animation-delay:1s">🕺</span>
+  <span class="floater" style="bottom:20%;left:10%;animation-delay:2s">🎸</span>
+  <span class="floater" style="bottom:15%;right:6%;animation-delay:3s">✌️</span>
+  <span class="floater" style="top:45%;left:2%;animation-delay:1.5s">🎺</span>
+  <span class="floater" style="top:55%;right:3%;animation-delay:2.5s">🪩</span>
+
+  <div class="disco-ball"></div>
+  <div class="title-main">THE 70s</div>
+  <div class="title-sub">The Decade That Shook the World</div>
+  <div class="groovy-divider"></div>
+  <div class="title-authors">by Sunny · Arnav · Christian · TK · Bodhin</div>
+
+  <nav class="nav-grid">
+    <button class="nav-btn" onclick="showSection('music')">
+      <span class="btn-icon">🎵</span>Music
+    </button>
+    <button class="nav-btn" onclick="showSection('fashion')">
+      <span class="btn-icon">👗</span>Fashion & Fads
+    </button>
+    <button class="nav-btn" onclick="showSection('movies')">
+      <span class="btn-icon">🎬</span>Movies
+    </button>
+    <button class="nav-btn" onclick="showSection('tv')">
+      <span class="btn-icon">📺</span>TV Shows
+    </button>
+    <button class="nav-btn" onclick="showSection('events')">
+      <span class="btn-icon">🌍</span>Major Events
+    </button>
+    <button class="nav-btn" onclick="showSection('sports')">
+      <span class="btn-icon">🏆</span>Sports
+    </button>
+    <button class="nav-btn" onclick="showSection('games')">
+      <span class="btn-icon">🕹️</span>Mini Games
+    </button>
+    <button class="nav-btn" onclick="showSection('quiz')">
+      <span class="btn-icon">❓</span>Quiz
+    </button>
+  </nav>
+</div>
+
+<!-- ===== MUSIC SECTION ===== -->
+<div id="music" class="section page">
+  <div class="page-header">
+    <h1>🎵 Music of the 70s</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <p class="section-intro">The 1970s was a golden age for music — a decade that gave birth to disco, punk, classic rock, funk, and soul. From the dance floors to the arenas, the 70s had a soundtrack like no other era.</p>
+
+    <div class="page-tabs">
+      <button class="page-tab active" onclick="switchTab('music','genres')">Genres</button>
+      <button class="page-tab" onclick="switchTab('music','artists')">Artists</button>
+      <button class="page-tab" onclick="switchTab('music','songs')">Iconic Songs</button>
+    </div>
+
+    <div id="music-genres" class="tab-content active">
+      <div class="card-grid">
+        <div class="card"><div class="card-icon">🪩</div><h3>Disco</h3><p>Disco dominated the mid-to-late 70s with pulsing beats and glittery dance floors. Studio 54 was the epicenter. Saturday Night Fever in 1977 made it a global phenomenon.</p><br><span class="tag">Dance</span><span class="tag orange">Clubs</span></div>
+        <div class="card"><div class="card-icon">🎸</div><h3>Classic Rock</h3><p>Led Zeppelin, Pink Floyd, and Fleetwood Mac ruled the airwaves and arenas. This era birthed the concept album, epic guitar solos, and stadium tours.</p><br><span class="tag avocado">Guitar</span><span class="tag rust">Arena</span></div>
+        <div class="card"><div class="card-icon">🎤</div><h3>Funk & Soul</h3><p>James Brown, Parliament-Funkadelic, and Earth Wind & Fire brought groove to the masses. Tight bass lines, brass sections, and irresistible rhythms defined the sound.</p><br><span class="tag">Groove</span><span class="tag orange">Bass</span></div>
+        <div class="card"><div class="card-icon">🤘</div><h3>Punk Rock</h3><p>The Ramones, Sex Pistols, and The Clash burst onto the scene in 1976-77 as a raw, rebellious reaction to polished stadium rock. Fast, loud, and defiant.</p><br><span class="tag rust">Rebellion</span><span class="tag avocado">Raw</span></div>
+        <div class="card"><div class="card-icon">🎹</div><h3>Progressive Rock</h3><p>Yes, Genesis, and ELP pushed rock into symphonic territory. 20-minute songs, synthesizers, and concept albums challenged what pop music could be.</p><br><span class="tag">Experimental</span></div>
+        <div class="card"><div class="card-icon">🌿</div><h3>Reggae</h3><p>Bob Marley brought reggae from Jamaica to the world. Songs of peace, love, and resistance resonated globally. "Exodus" (1977) was a landmark album.</p><br><span class="tag avocado">Peace</span><span class="tag">Jamaica</span></div>
+      </div>
+    </div>
+
+    <div id="music-artists" class="tab-content">
+      <div class="card-grid">
+        <div class="card"><div class="card-icon">👑</div><h3>Led Zeppelin</h3><p>The biggest rock band of the decade. Jimmy Page's guitar wizardry and Robert Plant's vocal range made "Stairway to Heaven" the defining rock epic.</p></div>
+        <div class="card"><div class="card-icon">🕺</div><h3>Bee Gees</h3><p>Brothers from Australia who became the kings of disco. Saturday Night Fever's soundtrack sold over 40 million copies — one of the best-selling albums ever.</p></div>
+        <div class="card"><div class="card-icon">💃</div><h3>Donna Summer</h3><p>The Queen of Disco with chart-topper after chart-topper. "Hot Stuff" and "Bad Girls" showed she could rock as hard as she could groove.</p></div>
+        <div class="card"><div class="card-icon">🎸</div><h3>Fleetwood Mac</h3><p>"Rumours" (1977) became one of the best-selling albums of all time. The band's tangled romances fueled some of the decade's most emotionally charged songs.</p></div>
+        <div class="card"><div class="card-icon">🌊</div><h3>The Eagles</h3><p>"Hotel California" (1977) captured a sense of American excess and disillusion. Their Greatest Hits is one of the top-selling albums in U.S. history.</p></div>
+        <div class="card"><div class="card-icon">☮️</div><h3>Bob Marley</h3><p>More than a musician — a prophet of peace. "No Woman No Cry," "Redemption Song," and "One Love" are immortal anthems that still echo worldwide.</p></div>
+      </div>
+    </div>
+
+    <div id="music-songs" class="tab-content">
+      <div class="card">
+        <h3>🎶 Essential 70s Playlist</h3>
+        <ul class="highlight-list">
+          <li>"Bohemian Rhapsody" – Queen (1975)</li>
+          <li>"Stayin' Alive" – Bee Gees (1977)</li>
+          <li>"Hotel California" – The Eagles (1977)</li>
+          <li>"Le Freak" – Chic (1978)</li>
+          <li>"Good Times" – Chic (1979)</li>
+          <li>"Dancing Queen" – ABBA (1976)</li>
+          <li>"Dream On" – Aerosmith (1973)</li>
+          <li>"Superstition" – Stevie Wonder (1972)</li>
+          <li>"Roxanne" – The Police (1978)</li>
+          <li>"More Than a Feeling" – Boston (1976)</li>
+          <li>"Stairway to Heaven" – Led Zeppelin (1971)</li>
+          <li>"Go Your Own Way" – Fleetwood Mac (1977)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FASHION SECTION ===== -->
+<div id="fashion" class="section page">
+  <div class="page-header">
+    <h1>👗 Fashion & Fads</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <p class="section-intro">The 70s was a decade of bold self-expression. Bell-bottoms, platform shoes, and earth tones defined the look, while fads like pet rocks and mood rings captured the era's playful spirit.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🪖</div><h3>Bell-Bottoms</h3><p>Flared jeans that widened dramatically below the knee were THE statement of the 70s. Worn by men and women alike, the wider the flare, the groovier you were.</p><br><span class="tag">Denim</span><span class="tag orange">Iconic</span></div>
+      <div class="card"><div class="card-icon">👟</div><h3>Platform Shoes</h3><p>Heels so high they required skill to walk in. From disco floors to everyday streets, everyone was elevated — sometimes by 4 or 5 inches of cork or wood.</p><br><span class="tag rust">Disco</span></div>
+      <div class="card"><div class="card-icon">😎</div><h3>Aviator Sunglasses</h3><p>Inspired by pilots and popularized by films, oversized aviator frames became a style staple. Tom Selleck and Farrah Fawcett made them unforgettable.</p><br><span class="tag avocado">Cool</span></div>
+      <div class="card"><div class="card-icon">💍</div><h3>Mood Rings</h3><p>A fad that swept the nation in 1975. The thermochromic liquid crystal stones changed color with body temperature, supposedly revealing your emotional state.</p><br><span class="tag">Fad</span><span class="tag orange">Fun</span></div>
+      <div class="card"><div class="card-icon">🐾</div><h3>Pet Rocks</h3><p>Gary Dahl sold ordinary rocks with a "care manual" in 1975. He made $15 million before Christmas. The ultimate proof that great marketing can sell anything.</p><br><span class="tag rust">Bizarre</span><span class="tag">$$$</span></div>
+      <div class="card"><div class="card-icon">🌿</div><h3>Earth Tones & Macramé</h3><p>Avocado green, harvest gold, and burnt orange dominated homes and wardrobes. Macramé plant hangers were in every living room.</p><br><span class="tag avocado">Boho</span></div>
+      <div class="card"><div class="card-icon">🎪</div><h3>Leisure Suits</h3><p>The business-casual disaster of the 70s — polyester suits in bold colors and patterns worn for both work and weekends. Tragically stylish at the time.</p><br><span class="tag">Polyester</span></div>
+      <div class="card"><div class="card-icon">🌈</div><h3>Tie-Dye & Hippie Chic</h3><p>Leftover from the late 60s but still going strong, tie-dye shirts, fringe vests, and headbands reflected the era's free-spirited youth culture.</p><br><span class="tag orange">Peace</span></div>
+      <div class="card"><div class="card-icon">🪅</div><h3>Feathered Hair</h3><p>Farrah Fawcett's 1976 poster made feathered, blow-dried hair an obsession. Millions bought the same haircut, and hair dryers flew off shelves.</p><br><span class="tag rust">Style</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MOVIES SECTION ===== -->
+<div id="movies" class="section page">
+  <div class="page-header">
+    <h1>🎬 Movies of the 70s</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <p class="section-intro">The 1970s is considered a golden age of American cinema. Directors like Spielberg, Coppola, Scorsese, and Lucas pushed boundaries, created new genres, and transformed Hollywood forever.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🦈</div><h3>Jaws (1975)</h3><p>Steven Spielberg invented the summer blockbuster. The mechanical shark barely worked, but the suspense was so masterful it made people afraid to swim in the ocean.</p><br><span class="tag rust">Thriller</span><span class="tag">Blockbuster</span></div>
+      <div class="card"><div class="card-icon">⭐</div><h3>Star Wars (1977)</h3><p>George Lucas changed cinema forever. The Force, Darth Vader, and a galaxy far, far away launched the biggest franchise in movie history and revolutionized special effects.</p><br><span class="tag avocado">Sci-Fi</span><span class="tag orange">Epic</span></div>
+      <div class="card"><div class="card-icon">🌹</div><h3>The Godfather (1972)</h3><p>Francis Ford Coppola's mafia masterpiece. Marlon Brando's iconic performance and "an offer he can't refuse" changed what crime movies could be. Won 3 Oscars.</p><br><span class="tag">Crime</span><span class="tag rust">Classic</span></div>
+      <div class="card"><div class="card-icon">🥊</div><h3>Rocky (1976)</h3><p>Sylvester Stallone wrote and starred in this underdog boxing story. Shot in 28 days on a shoestring budget, it won Best Picture and launched one of cinema's greatest franchises.</p><br><span class="tag avocado">Drama</span><span class="tag">Inspiration</span></div>
+      <div class="card"><div class="card-icon">👹</div><h3>The Exorcist (1973)</h3><p>William Friedkin's horror film was so terrifying that theaters reportedly had people fainting and vomiting. Still considered one of the scariest films ever made.</p><br><span class="tag rust">Horror</span></div>
+      <div class="card"><div class="card-icon">🎭</div><h3>Chinatown (1974)</h3><p>Roman Polanski's neo-noir starring Jack Nicholson. A complex, cynical detective story set in 1930s LA with one of cinema's most devastating endings.</p><br><span class="tag">Noir</span><span class="tag orange">Mystery</span></div>
+      <div class="card"><div class="card-icon">🚕</div><h3>Taxi Driver (1976)</h3><p>Martin Scorsese and Robert De Niro created Travis Bickle — one of cinema's most disturbing and fascinating anti-heroes. "You talkin' to me?" became iconic.</p><br><span class="tag rust">Drama</span><span class="tag avocado">Scorsese</span></div>
+      <div class="card"><div class="card-icon">🌊</div><h3>Apocalypse Now (1979)</h3><p>Coppola's Vietnam War epic was as chaotic to make as the war itself. Marlon Brando's "The horror... the horror" remains one of cinema's most haunting moments.</p><br><span class="tag">War</span><span class="tag orange">Epic</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TV SECTION ===== -->
+<div id="tv" class="section page">
+  <div class="page-header">
+    <h1>📺 TV Shows of the 70s</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <p class="section-intro">Television in the 70s tackled social issues head-on while also delivering pure escapist fun. From groundbreaking sitcoms to thrilling police dramas, the small screen was never more powerful.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🇺🇸</div><h3>All in the Family (1971–79)</h3><p>Archie Bunker's bigoted views were played for laughs but challenged American prejudice in an unprecedented way. The most-watched show for five straight years.</p><br><span class="tag avocado">Sitcom</span><span class="tag rust">Social</span></div>
+      <div class="card"><div class="card-icon">🚔</div><h3>Starsky & Hutch (1975–79)</h3><p>Two hip detectives in a red Ford Gran Torino became icons. Buddy-cop action drama before the term was even coined, with fashion and music to match.</p><br><span class="tag orange">Action</span><span class="tag">Crime</span></div>
+      <div class="card"><div class="card-icon">🏥</div><h3>M*A*S*H (1972–83)</h3><p>Set in the Korean War but clearly about Vietnam. A rare comedy-drama that could be hysterically funny and gut-wrenchingly sad in the same episode.</p><br><span class="tag">Comedy</span><span class="tag rust">Drama</span></div>
+      <div class="card"><div class="card-icon">🌻</div><h3>Happy Days (1974–84)</h3><p>A nostalgic look at the 1950s that defined an era of 70s television. The Fonz became one of TV's most iconic characters. "Ayyyyy!"</p><br><span class="tag avocado">Nostalgia</span><span class="tag orange">Classic</span></div>
+      <div class="card"><div class="card-icon">🧠</div><h3>Saturday Night Live (1975–)</h3><p>Lorne Michaels launched SNL in 1975. The original Not Ready for Prime Time Players — Chevy Chase, John Belushi, Gilda Radner — changed comedy forever.</p><br><span class="tag">Comedy</span><span class="tag rust">Live</span></div>
+      <div class="card"><div class="card-icon">🕵️</div><h3>Columbo (1971–78)</h3><p>Peter Falk's rumpled detective with his battered raincoat and catchphrase "Just one more thing..." was a genius subversion of the detective genre.</p><br><span class="tag avocado">Mystery</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EVENTS SECTION ===== -->
+<div id="events" class="section page">
+  <div class="page-header">
+    <h1>🌍 Major Events</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <p class="section-intro">The 1970s was a decade of seismic change: political scandals, international crises, environmental awakenings, and the end of an era. Here are the moments that defined it.</p>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-year">1970</div><div class="timeline-title">Kent State Shootings</div><div class="timeline-desc">National Guard troops opened fire on student protesters at Kent State University in Ohio, killing four students. The tragedy deepened anti-war sentiment across America and shocked the world.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1971</div><div class="timeline-title">26th Amendment — Voting Age Lowered</div><div class="timeline-desc">The U.S. Constitution was amended to lower the voting age from 21 to 18. Young Americans who were being drafted to fight in Vietnam could now vote for the politicians who sent them there.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1972</div><div class="timeline-title">Watergate Break-In</div><div class="timeline-desc">Operatives linked to President Nixon's re-election campaign broke into the Democratic National Committee headquarters. The scandal unraveled for two years, leading to Nixon's resignation in 1974.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1973</div><div class="timeline-title">Roe v. Wade</div><div class="timeline-desc">The Supreme Court ruled that abortion was a constitutional right. One of the most consequential and debated Supreme Court decisions in American history.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1973</div><div class="timeline-title">Oil Crisis / OPEC Embargo</div><div class="timeline-desc">Arab members of OPEC cut oil production and embargoed the U.S., causing gas prices to quadruple. Long lines at gas stations defined the American experience of 1973–74.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1974</div><div class="timeline-title">Nixon Resigns</div><div class="timeline-desc">Richard Nixon became the only U.S. president to resign from office, overwhelmed by the Watergate scandal. Gerald Ford assumed the presidency and controversially pardoned Nixon.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1975</div><div class="timeline-title">Fall of Saigon — Vietnam War Ends</div><div class="timeline-desc">The last U.S. forces evacuated from Saigon as North Vietnamese troops took the city. The Vietnam War officially ended, leaving a deep scar on American society.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1977</div><div class="timeline-title">Apple Computer Founded</div><div class="timeline-desc">Steve Jobs and Steve Wozniak launched the Apple II, one of the first mass-market personal computers. The digital age was quietly beginning in California garages.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1978</div><div class="timeline-title">Camp David Accords</div><div class="timeline-desc">President Carter brokered peace talks between Egypt's Sadat and Israel's Begin at Camp David — a historic and rare achievement of Middle East diplomacy.</div></div>
+      <div class="timeline-item"><div class="timeline-year">1979</div><div class="timeline-title">Iran Hostage Crisis</div><div class="timeline-desc">Iranian students stormed the U.S. Embassy in Tehran, taking 52 Americans hostage. The crisis lasted 444 days and helped doom Jimmy Carter's presidency.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SPORTS SECTION ===== -->
+<div id="sports" class="section page">
+  <div class="page-header">
+    <h1>🏆 Sports of the 70s</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <p class="section-intro">The 70s produced some of the greatest athletes and teams in history. From Muhammad Ali's epic bouts to the unstoppable Pittsburgh Steelers, sports were electric.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-icon">🥊</div><h3>Muhammad Ali</h3><p>Ali won the "Thrilla in Manila" vs. Frazier (1975) and the "Rumble in the Jungle" vs. Foreman (1974). Widely considered the greatest athlete of the century.</p><br><span class="tag">Boxing</span><span class="tag orange">Legend</span></div>
+      <div class="card"><div class="card-icon">🏈</div><h3>Pittsburgh Steelers</h3><p>Won four Super Bowls in six seasons (1975, 1976, 1979, 1980). "The Steel Curtain" defense and Terry Bradshaw's arm made them arguably the greatest dynasty in NFL history.</p><br><span class="tag rust">NFL</span><span class="tag">Dynasty</span></div>
+      <div class="card"><div class="card-icon">🎾</div><h3>Billie Jean King vs. Bobby Riggs</h3><p>The "Battle of the Sexes" in 1973 drew 90 million TV viewers worldwide. King's victory over Riggs was a landmark moment for women's sports and gender equality.</p><br><span class="tag avocado">Tennis</span><span class="tag">Historic</span></div>
+      <div class="card"><div class="card-icon">🏀</div><h3>Kareem Abdul-Jabbar</h3><p>Formerly Lew Alcindor, Kareem's skyhook was unstoppable. He led the Milwaukee Bucks and later the Lakers, redefining what a center could be in the NBA.</p><br><span class="tag">NBA</span><span class="tag orange">Goat</span></div>
+      <div class="card"><div class="card-icon">⚾</div><h3>Cincinnati Reds "Big Red Machine"</h3><p>Johnny Bench, Pete Rose, and Joe Morgan powered the Reds to back-to-back World Series titles in 1975–76. One of baseball's most dominant teams.</p><br><span class="tag rust">Baseball</span><span class="tag avocado">Dominant</span></div>
+      <div class="card"><div class="card-icon">🏒</div><h3>Montreal Canadiens</h3><p>The Habs won four consecutive Stanley Cups from 1976–79. Guy Lafleur was the era's most dynamic player and hockey's biggest star outside of North America.</p><br><span class="tag">NHL</span><span class="tag orange">Dynasty</span></div>
+      <div class="card"><div class="card-icon">🏊</div><h3>Mark Spitz — 1972 Olympics</h3><p>Spitz won 7 gold medals in 7 events at the Munich Olympics — all in world-record times. An unprecedented achievement that stood for decades.</p><br><span class="tag avocado">Olympics</span><span class="tag rust">Record</span></div>
+      <div class="card"><div class="card-icon">⛳</div><h3>Jack Nicklaus</h3><p>The Golden Bear dominated golf throughout the decade, winning 8 major championships in the 70s alone. His rivalry with Arnold Palmer and Lee Trevino captivated fans.</p><br><span class="tag">Golf</span><span class="tag orange">Legend</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MINI GAMES ===== -->
+<div id="games" class="section page">
+  <div class="page-header">
+    <h1>🕹️ Mini Games</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <div class="page-tabs">
+      <button class="page-tab active" onclick="switchTab('games','pong-tab')">🏓 Pong</button>
+      <button class="page-tab" onclick="switchTab('games','snake-tab')">🐍 Snake</button>
+    </div>
+
+    <!-- PONG -->
+    <div id="games-pong-tab" class="tab-content active">
+      <div style="text-align:center">
+        <div class="game-score-display" id="pong-score">Player: 0 &nbsp;|&nbsp; CPU: 0</div>
+        <canvas id="pong-canvas" width="700" height="400"></canvas>
+        <div class="game-controls">W/S keys for player paddle &nbsp;|&nbsp; CPU plays automatically</div>
+        <div>
+          <button class="game-btn" id="pong-start-btn" onclick="startPong()">▶ Start Game</button>
+          <button class="game-btn" onclick="resetPong()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SNAKE -->
+    <div id="games-snake-tab" class="tab-content">
+      <div style="text-align:center">
+        <div class="game-score-display" id="snake-score">Score: 0</div>
+        <canvas id="snake-canvas" width="500" height="500"></canvas>
+        <div class="game-controls">Arrow keys or WASD to move &nbsp;|&nbsp; Eat the 🍎 to grow!</div>
+        <div>
+          <button class="game-btn" id="snake-start-btn" onclick="startSnake()">▶ Start Game</button>
+          <button class="game-btn" onclick="resetSnake()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz" class="section page">
+  <div class="page-header">
+    <h1>❓ 70s Quiz</h1>
+    <button class="back-btn" onclick="goHome()">← Home</button>
+  </div>
+  <div class="page-content">
+    <div class="quiz-container">
+      <div class="quiz-progress"><div class="quiz-progress-bar" id="quiz-bar" style="width:0%"></div></div>
+      <div id="quiz-area"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.getElementById('title-screen').style.display = 'none';
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'quiz') initQuiz();
+  if (id === 'games') {
+    setTimeout(() => { drawPongStatic(); drawSnakeStatic(); }, 100);
+  }
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('title-screen').style.display = 'flex';
+  stopPong(); stopSnake();
+  window.scrollTo(0,0);
+}
+
+function switchTab(section, tab) {
+  const prefix = section + '-';
+  document.querySelectorAll(`#${section} .tab-content`).forEach(t => t.classList.remove('active'));
+  document.querySelectorAll(`#${section} .page-tab`).forEach(t => t.classList.remove('active'));
+  document.getElementById(prefix + tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== PONG =====
+const pongCanvas = () => document.getElementById('pong-canvas');
+const pongCtx = () => pongCanvas().getContext('2d');
+let pongState = null, pongLoop = null, pongKeys = {};
+
+function getPongDefaults() {
+  return {
+    ball: { x:350, y:200, vx:4, vy:3, r:8 },
+    p1: { y:160, score:0 },
+    cpu: { y:160, score:0 },
+    running: false
+  };
+}
+
+function drawPongStatic() {
+  const c = pongCanvas(), ctx = pongCtx();
+  c.width = Math.min(700, window.innerWidth - 40);
+  c.height = c.width * 400/700;
+  const w = c.width, h = c.height;
+  ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
+  ctx.setLineDash([10,10]);
+  ctx.strokeStyle = 'rgba(245,197,24,0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#F5C518';
+  ctx.font = `bold ${w*0.06}px Oswald`;
+  ctx.textAlign = 'center';
+  ctx.fillText('PRESS START', w/2, h/2);
+}
+
+function startPong() {
+  if (pongLoop) return;
+  pongState = getPongDefaults();
+  pongState.running = true;
+  document.addEventListener('keydown', e => { pongKeys[e.key] = true; e.preventDefault(); });
+  document.addEventListener('keyup', e => { pongKeys[e.key] = false; });
+  pongLoop = setInterval(updatePong, 16);
+}
+
+function stopPong() { clearInterval(pongLoop); pongLoop = null; }
+function resetPong() { stopPong(); pongState = null; pongKeys = {}; drawPongStatic(); document.getElementById('pong-score').textContent = 'Player: 0 | CPU: 0'; }
+
+function updatePong() {
+  const c = pongCanvas(), ctx = pongCtx();
+  const w = c.width, h = c.height;
+  const s = pongState;
+  const pw = w*0.018, ph = h*0.25;
+  const scale = w/700;
+
+  // move player
+  if ((pongKeys['w'] || pongKeys['W'] || pongKeys['ArrowUp']) && s.p1.y > 0) s.p1.y -= 5*scale;
+  if ((pongKeys['s'] || pongKeys['S'] || pongKeys['ArrowDown']) && s.p1.y < h-ph) s.p1.y += 5*scale;
+
+  // cpu ai
+  const cpuCenter = s.cpu.y + ph/2;
+  if (cpuCenter < s.ball.y - 10) s.cpu.y = Math.min(s.cpu.y + 3.5*scale, h-ph);
+  if (cpuCenter > s.ball.y + 10) s.cpu.y = Math.max(s.cpu.y - 3.5*scale, 0);
+
+  // ball movement
+  s.ball.x += s.ball.vx * scale;
+  s.ball.y += s.ball.vy * scale;
+
+  // wall bounce
+  if (s.ball.y - s.ball.r < 0 || s.ball.y + s.ball.r > h) s.ball.vy *= -1;
+
+  // paddle collision p1
+  if (s.ball.x - s.ball.r < pw*2 + pw && s.ball.y > s.p1.y && s.ball.y < s.p1.y + ph) {
+    s.ball.vx = Math.abs(s.ball.vx);
+    s.ball.vy += (s.ball.y - (s.p1.y + ph/2)) * 0.1;
+  }
+  // paddle collision cpu
+  if (s.ball.x + s.ball.r > w - pw*2 - pw && s.ball.y > s.cpu.y && s.ball.y < s.cpu.y + ph) {
+    s.ball.vx = -Math.abs(s.ball.vx);
+    s.ball.vy += (s.ball.y - (s.cpu.y + ph/2)) * 0.1;
+  }
+
+  // scoring
+  if (s.ball.x < 0) { s.cpu.score++; resetBall(s, w, h); }
+  if (s.ball.x > w) { s.p1.score++; resetBall(s, w, h); }
+
+  document.getElementById('pong-score').textContent = `Player: ${s.p1.score}  |  CPU: ${s.cpu.score}`;
+
+  // draw
+  ctx.fillStyle = '#000'; ctx.fillRect(0,0,w,h);
+  ctx.setLineDash([8,8]); ctx.strokeStyle='rgba(245,197,24,0.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(w/2,0); ctx.lineTo(w/2,h); ctx.stroke(); ctx.setLineDash([]);
+
+  ctx.fillStyle = '#F5C518';
+  ctx.fillRect(pw, s.p1.y, pw, ph);
+  ctx.fillRect(w-pw*2, s.cpu.y, pw, ph);
+
+  ctx.beginPath();
+  ctx.arc(s.ball.x, s.ball.y, s.ball.r*scale, 0, Math.PI*2);
+  ctx.fillStyle = '#fff'; ctx.fill();
+}
+
+function resetBall(s, w, h) {
+  s.ball.x = w/2; s.ball.y = h/2;
+  s.ball.vx = (Math.random() > 0.5 ? 1 : -1) * 4;
+  s.ball.vy = (Math.random() - 0.5) * 6;
+}
+
+// ===== SNAKE =====
+const CELL = 20;
+let snakeState = null, snakeLoop = null;
+
+function getSnakeDefaults(w, h) {
+  const cols = Math.floor(w/CELL), rows = Math.floor(h/CELL);
+  return {
+    snake: [{x:10, y:10},{x:9,y:10},{x:8,y:10}],
+    dir: {x:1, y:0},
+    next: {x:1, y:0},
+    food: randomFood(cols, rows, [{x:10,y:10}]),
+    cols, rows,
+    score: 0,
+    alive: true
+  };
+}
+
+function randomFood(cols, rows, snake) {
+  let f;
+  do { f = {x: Math.floor(Math.random()*cols), y: Math.floor(Math.random()*rows)}; }
+  while (snake.some(s => s.x===f.x && s.y===f.y));
+  return f;
+}
+
+function drawSnakeStatic() {
+  const c = document.getElementById('snake-canvas');
+  const ctx = c.getContext('2d');
+  c.width = Math.min(500, window.innerWidth - 40);
+  c.height = c.width;
+  ctx.fillStyle = '#0A1A05'; ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle = '#6B7C2E';
+  ctx.font = `bold ${c.width*0.07}px Oswald`;
+  ctx.textAlign='center';
+  ctx.fillText('PRESS START', c.width/2, c.height/2);
+}
+
+function startSnake() {
+  if (snakeLoop) return;
+  const c = document.getElementById('snake-canvas');
+  c.width = Math.min(500, window.innerWidth - 40);
+  c.height = c.width;
+  snakeState = getSnakeDefaults(c.width, c.height);
+  document.addEventListener('keydown', handleSnakeKey);
+  snakeLoop = setInterval(updateSnake, 120);
+}
+
+function stopSnake() { clearInterval(snakeLoop); snakeLoop = null; document.removeEventListener('keydown', handleSnakeKey); }
+function resetSnake() { stopSnake(); snakeState=null; drawSnakeStatic(); document.getElementById('snake-score').textContent='Score: 0'; }
+
+function handleSnakeKey(e) {
+  const s = snakeState; if (!s) return;
+  if ((e.key==='ArrowUp'||e.key==='w'||e.key==='W') && s.dir.y!==1) s.next={x:0,y:-1};
+  if ((e.key==='ArrowDown'||e.key==='s'||e.key==='S') && s.dir.y!==-1) s.next={x:0,y:1};
+  if ((e.key==='ArrowLeft'||e.key==='a'||e.key==='A') && s.dir.x!==1) s.next={x:-1,y:0};
+  if ((e.key==='ArrowRight'||e.key==='d'||e.key==='D') && s.dir.x!==-1) s.next={x:1,y:0};
+  e.preventDefault();
+}
+
+function updateSnake() {
+  const s = snakeState;
+  const c = document.getElementById('snake-canvas');
+  const ctx = c.getContext('2d');
+  const cell = Math.floor(c.width / s.cols);
+
+  s.dir = {...s.next};
+  const head = {x: s.snake[0].x + s.dir.x, y: s.snake[0].y + s.dir.y};
+
+  if (head.x<0||head.x>=s.cols||head.y<0||head.y>=s.rows||s.snake.some(seg=>seg.x===head.x&&seg.y===head.y)) {
+    stopSnake();
+    ctx.fillStyle='rgba(0,0,0,0.7)'; ctx.fillRect(0,0,c.width,c.height);
+    ctx.fillStyle='#E8621A'; ctx.font=`bold ${c.width*0.08}px Righteous`; ctx.textAlign='center';
+    ctx.fillText('GAME OVER', c.width/2, c.height/2-20);
+    ctx.fillStyle='#F5C518'; ctx.font=`${c.width*0.05}px Oswald`;
+    ctx.fillText('Score: '+s.score, c.width/2, c.height/2+30);
+    return;
+  }
+
+  s.snake.unshift(head);
+  if (head.x===s.food.x && head.y===s.food.y) {
+    s.score += 10;
+    s.food = randomFood(s.cols, s.rows, s.snake);
+    document.getElementById('snake-score').textContent = 'Score: '+s.score;
+  } else {
+    s.snake.pop();
+  }
+
+  // draw
+  ctx.fillStyle='#0A1A05'; ctx.fillRect(0,0,c.width,c.height);
+  // grid
+  ctx.strokeStyle='rgba(107,124,46,0.1)'; ctx.lineWidth=0.5;
+  for(let x=0;x<c.width;x+=cell){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,c.height);ctx.stroke();}
+  for(let y=0;y<c.height;y+=cell){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke();}
+
+  // snake
+  s.snake.forEach((seg, i) => {
+    const grad = ctx.createLinearGradient(seg.x*cell, seg.y*cell, seg.x*cell+cell, seg.y*cell+cell);
+    grad.addColorStop(0, i===0 ? '#8BC34A' : '#6B7C2E');
+    grad.addColorStop(1, i===0 ? '#6B7C2E' : '#4A5520');
+    ctx.fillStyle = grad;
+    ctx.fillRect(seg.x*cell+1, seg.y*cell+1, cell-2, cell-2);
+    if (i===0) {
+      ctx.fillStyle='#000';
+      ctx.fillRect(seg.x*cell+cell*0.3, seg.y*cell+cell*0.25, cell*0.12, cell*0.12);
+      ctx.fillRect(seg.x*cell+cell*0.58, seg.y*cell+cell*0.25, cell*0.12, cell*0.12);
+    }
+  });
+
+  // food
+  ctx.font = `${cell}px serif`;
+  ctx.textAlign='center';
+  ctx.fillText('🍎', s.food.x*cell+cell/2, s.food.y*cell+cell*0.9);
+}
+
+// ===== QUIZ =====
+const quizData = [
+  { q:"Which 1977 film launched the summer blockbuster era and created one of the biggest sci-fi franchises ever?", opts:["Close Encounters","Star Wars","Logan's Run","Alien"], a:1 },
+  { q:"What dance-driven 1977 film made disco a worldwide phenomenon and launched the Bee Gees to superstardom?", opts:["Grease","Car Wash","Saturday Night Fever","The Rose"], a:2 },
+  { q:"Which president resigned in 1974 due to the Watergate scandal?", opts:["Gerald Ford","Lyndon Johnson","Jimmy Carter","Richard Nixon"], a:3 },
+  { q:"The 'Thrilla in Manila' was a famous boxing match between Muhammad Ali and who?", opts:["George Foreman","Ken Norton","Joe Frazier","Sonny Liston"], a:2 },
+  { q:"What fashion item — sold by the millions — was created by Gary Dahl in 1975?", opts:["Mood Ring","Lava Lamp","Pet Rock","Hula Hoop"], a:2 },
+  { q:"Which band released 'Rumours' in 1977, one of the best-selling albums of all time?", opts:["Eagles","Led Zeppelin","Fleetwood Mac","Steely Dan"], a:2 },
+  { q:"The 'Battle of the Sexes' 1973 tennis match between Billie Jean King and Bobby Riggs drew how many TV viewers worldwide?", opts:["10 million","30 million","90 million","150 million"], a:2 },
+  { q:"Which team won four Super Bowls in six seasons in the 1970s, known as the 'Steel Curtain'?", opts:["Dallas Cowboys","Miami Dolphins","Oakland Raiders","Pittsburgh Steelers"], a:3 },
+  { q:"Saturday Night Live premiered in what year?", opts:["1973","1974","1975","1977"], a:2 },
+  { q:"Which Marlon Brando film won Best Picture at the 1973 Academy Awards?", opts:["Last Tango in Paris","Apocalypse Now","The Godfather","A Clockwork Orange"], a:2 },
+  { q:"The 1973 oil crisis was caused by which organization's embargo?", opts:["NATO","OPEC","G7","SEATO"], a:1 },
+  { q:"Mark Spitz won how many gold medals at the 1972 Munich Olympics?", opts:["5","6","7","8"], a:2 },
+];
+
+let quizIdx = 0, quizScore = 0, quizAnswered = false;
+
+function initQuiz() {
+  quizIdx = 0; quizScore = 0; quizAnswered = false;
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  const bar = document.getElementById('quiz-bar');
+  bar.style.width = ((quizIdx / quizData.length) * 100) + '%';
+
+  if (quizIdx >= quizData.length) {
+    const pct = Math.round((quizScore/quizData.length)*100);
+    let msg = pct>=80 ? "Far out! You're a true 70s expert! 🕺" : pct>=50 ? "Groovy! You know your 70s stuff! ✌️" : "Keep on truckin' — brush up on your 70s history! 🌻";
+    area.innerHTML = `
+      <div class="quiz-score">
+        <div class="score-num">${quizScore}/${quizData.length}</div>
+        <div class="score-label">${pct}% Correct</div>
+        <div class="score-msg">${msg}</div>
+        <button class="quiz-next-btn show" style="margin-top:25px" onclick="initQuiz()">Play Again</button>
+        <button class="quiz-next-btn show" style="margin-top:25px;background:linear-gradient(135deg,#2A8C8C,#1A5C5C)" onclick="goHome()">Back to Home</button>
+      </div>`;
+    bar.style.width='100%';
+    return;
+  }
+
+  const q = quizData[quizIdx];
+  area.innerHTML = `
+    <div class="quiz-question">
+      <div class="quiz-q-num">Question ${quizIdx+1} of ${quizData.length}</div>
+      <div class="quiz-q-text">${q.q}</div>
+    </div>
+    <div class="quiz-options">
+      ${q.opts.map((o,i)=>`<button class="quiz-option" onclick="answerQuiz(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+    </div>
+    <div class="quiz-feedback" id="qfeedback"></div>
+    <button class="quiz-next-btn" id="qnext" onclick="nextQuiz()">Next Question →</button>
+  `;
+  quizAnswered = false;
+}
+
+function answerQuiz(i) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizData[quizIdx];
+  const opts = document.querySelectorAll('.quiz-option');
+  const fb = document.getElementById('qfeedback');
+  const nxt = document.getElementById('qnext');
+
+  opts.forEach(o => o.style.cursor='default');
+  opts[q.a].classList.add('correct');
+
+  if (i === q.a) {
+    quizScore++;
+    fb.textContent = '✓ Correct! Far out! 🎉';
+    fb.className = 'quiz-feedback show good';
+  } else {
+    opts[i].classList.add('wrong');
+    fb.textContent = `✗ Not quite! The answer was: ${q.opts[q.a]}`;
+    fb.className = 'quiz-feedback show bad';
+  }
+  nxt.className = 'quiz-next-btn show';
+  if (quizIdx === quizData.length-1) nxt.textContent = 'See Results 🌟';
+}
+
+function nextQuiz() {
+  quizIdx++;
+  renderQuiz();
+}
+</script>
+</body>
+</html>
